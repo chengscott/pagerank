@@ -1,8 +1,8 @@
 CXX ?= g++
-CXXFLAGS += -std=c++11 -O3 -Wall
+CXXFLAGS += -std=c++17 -O3 -Wall
 BIN = pagerank
 SRCS = pagerank.cpp
-DEPS = graph.hpp matrix.hpp solver.hpp
+DEPS = graph.hpp matrix.hpp solver.hpp graph_builder.hpp
 OBJS = $(SRCS:.cpp=)
 OBJS += $(DEPS:.hpp=)
 CHECKS = -checks=bugprone-*,clang-analyzer-*,modernize-*,performance-*,readability-*

@@ -2,6 +2,8 @@
 #include "matrix.hpp"
 #include <iostream>
 
+enum class GraphType { Sparse, Dense };
+
 class Graph {
 public:
   Graph() = default;
@@ -12,15 +14,11 @@ public:
   virtual ~Graph() = default;
 
 public:
-  enum class GraphType { None, Sparse, Dense };
-
-  void set_input_format(const GraphType &gt) { input_format_ = gt; }
-
-  friend std::istream &operator>>(std::istream &in, Graph &g) {
+  friend constexpr std::istream &operator>>(std::istream &in, Graph &g) {
     return g.input(in);
   }
 
-  friend std::ostream &operator<<(std::ostream &out, const Graph &g) {
+  friend constexpr std::ostream &operator<<(std::ostream &out, const Graph &g) {
     return g.output(out);
   }
 
@@ -29,7 +27,8 @@ protected:
   virtual std::ostream &output(std::ostream &out) const = 0;
 
 private:
-  GraphType input_format_ = GraphType::None;
+  template <size_t> friend class GraphBuilderEngine;
+  GraphType input_format_;
 };
 
 class DenseGraph : public Graph {

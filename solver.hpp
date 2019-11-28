@@ -4,20 +4,13 @@
 
 class Solver {
 public:
-  static Solver &getInstance() {
-    static Solver instance;
-    return instance;
-  }
-  Solver() = default;
+  Solver(std::unique_ptr<Graph> graph = nullptr) : graph_{std::move(graph)} {};
   ~Solver() = default;
   Solver(Solver const &) = delete;
-  Solver(Solver &&) = delete;
+  Solver(Solver &&) noexcept = default;
   Solver &operator=(Solver const &) = delete;
-  Solver &operator=(Solver &&) = delete;
-
-public:
-  void set_graph(std::unique_ptr<Graph> &graph) { graph_ = std::move(graph); }
+  Solver &operator=(Solver &&) noexcept = default;
 
 private:
-  std::unique_ptr<Graph> graph_ = nullptr;
+  std::unique_ptr<Graph> graph_;
 };

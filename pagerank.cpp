@@ -1,10 +1,11 @@
 #include "graph.hpp"
+#include "graph_builder.hpp"
 #include "solver.hpp"
 
 int main(int argc, char **argv) {
-  // TODO: parse argc, argv
-  auto &solver = Solver::getInstance();
-  std::unique_ptr<Graph> graph(new DenseGraph);
-  graph->set_input_format(Graph::GraphType::Sparse);
-  solver.set_graph(graph);
+  auto &&graph = GraphBuilder(GraphType::Dense)
+                     .withInputFormat(GraphType::Sparse)
+                     .withProvider(MatrixProvider::Naive)
+                     .build();
+  Solver solver(std::move(graph));
 }
