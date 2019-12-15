@@ -1,10 +1,12 @@
 CXX ?= g++
-CXXFLAGS += -std=c++17 -O3 -Wall
+CXXFLAGS += -std=c++17 -O3 -march=native #-flto
+CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wpedantic
+CXXFLAGS += -Wunused -Wsign-conversion -Wdouble-promotion
+CXXFLAGS += -Iinclude
 BIN = pagerank
 SRCS = pagerank.cpp
-DEPS = graph.hpp matrix.hpp solver.hpp graph_builder.hpp
-OBJS = $(SRCS:.cpp=)
-OBJS += $(DEPS:.hpp=)
+DEPS = $(shell find include -name *.hpp)
+OBJS = $(SRCS:.cpp=) $(DEPS:.hpp=)
 CHECKS = -checks=bugprone-*,clang-analyzer-*,modernize-*,performance-*,readability-*
 
 .PHONY: $(BIN) format check clean
