@@ -1,15 +1,25 @@
+#include "logger.hpp"
 #include "parse.hpp"
+#include "solver.hpp"
 
 int main(int argc, const char **argv) {
+  auto &logger = Logger::getInstance();
+  logger.logInfo("PageRank", "\n");
+
   // parse arguments
-  ArgumentParser parser = parse(argc, argv);
-  size_t iters = parse_iters(parser);
-  auto matrix = parse_matrix(parser);
+  Argument arg;
+  try {
+    ArgumentParser parser = argparse(argc, argv);
+    arg = retrieve(parser);
+    log_arg(arg);
+  } catch (const std::exception &ex) {
+    logger.logError(ex.what());
+    return 1;
+  }
 
   // solve PageRank
-  Solver solver(std::move(matrix));
-  solver.inputGraph(parser.exists("input"), parser.get<std::string>("input"));
-  solver.calculate(iters);
-  solver.outputPageRank(parser.exists("output"),
-                        parser.get<std::string>("output"));
+  Solver solver(arg.nodes);
+  solver.inputGraph(arg.isFromFile, arg.inFilename);
+  solver.calculate(arg.iters);
+  solver.outputPageRank(arg.isToFile, arg.outFilename);
 }
