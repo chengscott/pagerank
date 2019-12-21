@@ -1,4 +1,10 @@
+# CMake
+build
+
+# Project
 .vscode/
 testcases/
 
+# Binary
 pagerank
+test_runner
