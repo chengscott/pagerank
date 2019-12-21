@@ -6,9 +6,17 @@ set(TARGET_BIN pagerank)
 
 option(USE_CLANG_TIDY "use clang-tidy" OFF)
 
+# Main program
 add_executable(${TARGET_BIN} pagerank.cpp)
 target_include_directories(${TARGET_BIN} PRIVATE include)
+
+# argparse library
+# add_subdirectory(third_party/argparse)
+target_include_directories(${TARGET_BIN} PRIVATE third_party/argparse)
+
+# Warning flags
 target_compile_options(${TARGET_BIN} PRIVATE  -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wpedantic -Wunused -Wsign-conversion -Wdouble-promotion)
 
+# Test program
 add_subdirectory(third_party/googletest)
 add_subdirectory(tests)

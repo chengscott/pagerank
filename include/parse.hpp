@@ -1,5 +1,5 @@
 #pragma once
-#include "argparse.hpp"
+#include "argparse.h"
 #include "logger.hpp"
 
 static ArgumentParser argparse(int argc, const char **argv) {
