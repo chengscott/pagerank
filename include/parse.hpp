@@ -5,10 +5,10 @@
 static ArgumentParser argparse(int argc, const char **argv) {
   ArgumentParser parser("PageRank");
   // algorithm arguments
+  parser.add_argument("-n", "--nodes", "Number of nodes", true);
+  parser.add_argument("-t", "--iteration", "Update iterations", false);
   parser.add_argument("-i", "--input", "Input filename", false);
   parser.add_argument("-o", "--output", "Output filename", false);
-  parser.add_argument("-it", "--iteration", "Update iterations", false);
-  parser.add_argument("-n", "--nodes", "Number of nodes", true);
   parser.parse(argc, argv);
   return parser;
 }
@@ -20,10 +20,8 @@ struct Argument {
 };
 
 static Argument retrieve(ArgumentParser &parser) {
-  constexpr const size_t iters_default = 1000;
   Argument arg;
-  arg.iters = parser.exists("iteration") ? iters_default
-                                         : parser.get<size_t>("iteration");
+  arg.iters = parser.exists("iteration") ? parser.get<size_t>("iteration") : 0;
   arg.nodes = parser.get<size_t>("nodes");
   arg.isFromFile = parser.exists("input");
   arg.isToFile = parser.exists("output");

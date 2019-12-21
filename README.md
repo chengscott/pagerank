@@ -1,5 +1,6 @@
+# PageRank
 
 Input: stdin / file
 Format: Sparse graph / Dense graph
 Operation: Dense graph
-Output: Vector
+Output: stdout / file

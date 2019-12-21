@@ -10,6 +10,9 @@ int main(int argc, const char **argv) {
   Argument arg;
   try {
     ArgumentParser parser = argparse(argc, argv);
+    if (parser.is_help()) {
+      return 0;
+    }
     arg = retrieve(parser);
     log_arg(arg);
   } catch (const std::exception &ex) {
@@ -20,6 +23,10 @@ int main(int argc, const char **argv) {
   // solve PageRank
   Solver solver(arg.nodes);
   solver.inputGraph(arg.isFromFile, arg.inFilename);
-  solver.calculate(arg.iters);
+  if (arg.iters == 0) {
+    solver.calculate_eps();
+  } else {
+    solver.calculate_iters(arg.iters);
+  }
   solver.outputPageRank(arg.isToFile, arg.outFilename);
 }
