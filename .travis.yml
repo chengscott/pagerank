@@ -1,7 +1,6 @@
 language: cpp
-
-compiler:
-  - gcc
+dist: bionic
+compiler: gcc
 
 before_script:
   - mkdir build
