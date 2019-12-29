@@ -1,8 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "logger_test.hpp"
-#include "matrix_mkl_test.hpp"
-#include "matrix_naive_test.hpp"
+#include "matrix_test.hpp"
 #include "solver_test.hpp"
 
 int main(int argc, char **argv) {

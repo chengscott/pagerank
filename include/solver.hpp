@@ -1,18 +1,18 @@
 #pragma once
-#include "matrix_naive.hpp"
+#include "matrix.hpp"
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 
 class Solver {
 public:
-  using size_type = MatrixNaive::size_type;
-  using value_type = MatrixNaive::value_type;
+  using size_type = Matrix::size_type;
+  using value_type = Matrix::value_type;
 
 public:
   explicit Solver(size_type nodes) : nodes_(nodes) {
-    matrix_ = std::make_unique<MatrixNaive>(nodes, nodes);
-    rank_ = std::make_unique<MatrixNaive>(nodes, 1);
+    matrix_ = std::make_unique<Matrix>(nodes, nodes);
+    rank_ = std::make_unique<Matrix>(nodes, 1);
     // initialize rank vector
     auto &rank = *rank_;
     const value_type rank_init = 1. / nodes;
@@ -78,6 +78,6 @@ public:
   }
 
 private:
-  std::unique_ptr<MatrixNaive> matrix_, rank_;
+  std::unique_ptr<Matrix> matrix_, rank_;
   size_type nodes_;
 };

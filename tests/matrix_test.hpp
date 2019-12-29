@@ -1,14 +1,14 @@
 #pragma once
 #include "gtest/gtest.h"
 
-#include "matrix_naive.hpp"
+#include "matrix.hpp"
 
 namespace {
 
-using size_type = MatrixNaive::size_type;
+using size_type = Matrix::size_type;
 
-TEST(MatrixNaiveZero, CtorZero) {
-  const MatrixNaive large(1000, 1000);
+TEST(MatrixZero, CtorZero) {
+  const Matrix large(1000, 1000);
   for (size_type i = 0; i < 3; ++i) {
     for (size_type j = 0; j < 3; ++j) {
       ASSERT_DOUBLE_EQ(0., large(i, j));
@@ -16,9 +16,9 @@ TEST(MatrixNaiveZero, CtorZero) {
   }
 }
 
-TEST(MatrixNaiveZero, CopyCtorZero) {
-  const MatrixNaive large(1000, 1000);
-  const MatrixNaive another_large(large);
+TEST(MatrixZero, CopyCtorZero) {
+  const Matrix large(1000, 1000);
+  const Matrix another_large(large);
   for (size_type i = 0; i < 3; ++i) {
     for (size_type j = 0; j < 3; ++j) {
       ASSERT_DOUBLE_EQ(0., another_large(i, j));
@@ -26,29 +26,29 @@ TEST(MatrixNaiveZero, CopyCtorZero) {
   }
 }
 
-TEST(MatrixNaiveSizeTest, SquareMatrix) {
-  const MatrixNaive one_one(1, 1);
+TEST(MatrixSizeTest, SquareMatrix) {
+  const Matrix one_one(1, 1);
   EXPECT_EQ(one_one.nrow(), 1);
   EXPECT_EQ(one_one.ncol(), 1);
-  MatrixNaive two_two(2, 2);
+  Matrix two_two(2, 2);
   EXPECT_EQ(two_two.nrow(), 2);
   EXPECT_EQ(two_two.ncol(), 2);
-  const MatrixNaive large(1000, 1000);
+  const Matrix large(1000, 1000);
   EXPECT_EQ(large.nrow(), 1000);
   EXPECT_EQ(large.ncol(), 1000);
 }
 
-TEST(MatrixNaiveSizeTest, ColVector) {
-  MatrixNaive two_two(3, 1);
+TEST(MatrixSizeTest, ColVector) {
+  Matrix two_two(3, 1);
   EXPECT_EQ(two_two.nrow(), 3);
   EXPECT_EQ(two_two.ncol(), 1);
-  const MatrixNaive large(1000, 1);
+  const Matrix large(1000, 1);
   EXPECT_EQ(large.nrow(), 1000);
   EXPECT_EQ(large.ncol(), 1);
 }
 
-TEST(MatrixNaiveDistance, ExactEqual) {
-  MatrixNaive id(3, 3), small(3, 3);
+TEST(MatrixDistance, ExactEqual) {
+  Matrix id(3, 3), small(3, 3);
   id(0, 0) = id(1, 1) = id(2, 2) = 1.;
   small(0, 0) = 1.;
   small(0, 1) = 2.;
@@ -63,8 +63,8 @@ TEST(MatrixNaiveDistance, ExactEqual) {
   ASSERT_DOUBLE_EQ(distance(id, id), 0.);
 }
 
-TEST(MatrixNaiveMultiply, Identity) {
-  MatrixNaive id(3, 3), small(3, 3);
+TEST(MatrixMultiply, Identity) {
+  Matrix id(3, 3), small(3, 3);
   id(0, 0) = id(1, 1) = id(2, 2) = 1.;
   small(0, 0) = 1.;
   small(0, 1) = 2.;
@@ -81,8 +81,8 @@ TEST(MatrixNaiveMultiply, Identity) {
   ASSERT_DOUBLE_EQ(distance(small * id, id * small), 0.);
 }
 
-TEST(MatrixNaiveMultiply, Square) {
-  MatrixNaive ma(3, 3), mb(3, 3), result(3, 3);
+TEST(MatrixMultiply, Square) {
+  Matrix ma(3, 3), mb(3, 3), result(3, 3);
   ma(0, 0) = mb(2, 2) = 1.;
   ma(0, 1) = mb(2, 1) = 2.;
   ma(0, 2) = mb(2, 0) = 3.;
@@ -104,8 +104,8 @@ TEST(MatrixNaiveMultiply, Square) {
   ASSERT_DOUBLE_EQ(distance(ma * mb, result), 0.);
 }
 
-TEST(MatrixNaiveMultiply, MatrixVector) {
-  MatrixNaive small(3, 3), vec(3, 1), result(3, 1);
+TEST(MatrixMultiply, MatrixVector) {
+  Matrix small(3, 3), vec(3, 1), result(3, 1);
   small(0, 0) = 1.;
   small(0, 1) = 2.;
   small(0, 2) = 3.;
